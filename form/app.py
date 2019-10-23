@@ -37,7 +37,7 @@ def check_lotto():
 @ app.route('/result_lotto')
 def result_lotto():
     n = request.args.get('round_lotto') # request.args['round_lotto'] -> n = input('회차를 입력하세요: ')
-    numbers = list(map(int, request.args.get('numbers').get('numbers').split())) # [1,2,3,4,5,6]
+    numbers = list(map(int, request.args.get('numbers').split())) # [1,2,3,4,5,6]
     # [int(number) for number in request.args.get('numbers').split()]
     url = f'https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo={n}'
 
@@ -50,11 +50,11 @@ def result_lotto():
     #for i in range(1, 7):
     #    winner.append(lotto[f'drwtNo{i}'])
 
-    winner.append([lotto[f'drwtNo{i}'] for i in range(1,7)])  # 이처럼 짜면 속도측면에서도 빠르다.
+    winner = [lotto[f'drwtNo{i}'] for i in range(1,7)]  # 이처럼 짜면 속도측면에서도 빠르다.
     bonus = lotto['bnusNo']
     
     
-    matched = list((set(numbers) & set(winner))) # 중복되는 숫자들
+    matched = list(set(numbers) & set(winner)) # 중복되는 숫자들
     count = len(matched)
 
     if count == 6:
